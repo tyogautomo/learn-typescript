@@ -12,7 +12,7 @@ Simply run ```tsc filename.ts --watch```
 
   1. You need to init the project as TS project, type this on your terminal under your project folder
       ```
-      tsc init
+      tsc --init
       ```
   2. Then watch the files with
       ```
