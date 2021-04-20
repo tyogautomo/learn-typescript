@@ -1,13 +1,13 @@
-function add(number1, number2) {
-    return number1 + number2;
+var userInput; // unknown is different with any
+var userName;
+userInput = 4;
+userInput = 'Tono';
+// userName = userInput; // this will error if userInput type is 'unknown', but not with 'any'
+// so do this instead
+if (typeof userInput === 'string') {
+    userName = userInput;
 }
-;
-function printResult(num) {
-    console.log('Result is: ' + num);
-}
-;
-var combineValues;
-combineValues = add;
-// combineValues = printResult; //this will error compile
-printResult(add(2, 3));
-console.log(combineValues(7, 7));
+var informError = function (message, code) {
+    throw { message: message, code: code };
+};
+informError('An Error occured!', 500);
