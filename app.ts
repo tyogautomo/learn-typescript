@@ -1,24 +1,29 @@
-type Combinable = string | number; // <== type alias
-type ConversionTypes = 'as-numbers' | 'as-text';
-
-const combineThis = (
-  input1: Combinable, // <== union type
-  input2: Combinable,
-  resultConversion: ConversionTypes // <== literal type
-) => {
-  let result: (string | number);
-  if ((typeof input1 === 'number' && typeof input2 === 'number') || resultConversion === 'as-numbers') { // need condition, string + number cant on typescript
-    result = +input1 + +input2;
-  } else {
-    result = input1.toString() + input2.toString();
-  }
-  return result;
+function add(number1: number, number2: number): number {
+  return number1 + number2;
 };
 
-const result = combineThis(2, 'jojon', 'as-text');
-const result2 = combineThis(2, 22, 'as-numbers');
-const result3 = combineThis('2', '22', 'as-numbers');
+function printResult(num: number): void {
+  console.log('Result is: ' + num);
+};
 
-console.log(result);
-console.log(result2);
-console.log(result3);
+let combineValues: (a: number, b: number) => number;
+
+combineValues = add;
+// combineValues = printResult; //this will error compile
+
+function addAndHandle(
+  n1: number,
+  n2: number,
+  cb: (num: number) => void // <== it will ignore whether the callback return anything
+) {
+  const result = n1 + n2;
+  cb(result);
+}
+
+printResult(add(2, 3));
+console.log(combineValues(7, 7));
+
+addAndHandle(2, 4, (num) => { // <== dont need to specify the callback's parameter type
+  console.log(num);
+  return num; // <== you can still return anything eventough the type is void (must 'void')
+})
