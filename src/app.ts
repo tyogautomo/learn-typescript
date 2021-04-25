@@ -10,7 +10,7 @@ add = (n1: number, n2: number) => {
 //=====================================================//
 
 interface Citizen {
-  readonly cardId: string;
+  readonly cardId?: string; // question mark mean optional
 }
 
 interface Biological {
@@ -22,6 +22,8 @@ interface Greetable extends Citizen, Biological {
   name: string;
   greet: (a: string) => void;
   walk: () => void;
+  address?: string; // question mark mean optional
+  eat?: () => void;
 }
 
 let person1: Greetable;
@@ -40,20 +42,30 @@ person1 = {
 person1.greet('Hello my name is');
 
 class Person implements Greetable {
-  cardId: string;
+  cardId?: string;
 
   constructor(
     public name: string,
     public age: number,
     public sex: string,
     public gender: string,
-    cardId: string
+    cardId?: string
   ) {
-    this.cardId = cardId;
+    if (cardId) {
+      this.cardId = cardId;
+    }
   }; // age will not error
 
   greet(phrase: string) {
     console.log(`${phrase} ${this.name}`);
+  }
+
+  showIdCard() {
+    if (this.cardId) {
+      console.log(`my id card is ${this.cardId}`);
+    } else {
+      console.log('I have no card ID.');
+    }
   }
 
   changeCardId(id: string) {
@@ -81,3 +93,6 @@ console.log(person2.cardId);
 person2.changeCardId('311');
 console.log(person2.cardId);
 person2.cardId = '3333' // this is weird, it still work, if we declare readonly on interface
+
+const person3 = new Person('Mikael', 24, 'm', 's');
+person3.showIdCard();
