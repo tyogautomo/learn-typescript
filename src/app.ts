@@ -65,3 +65,46 @@ const useVehicle = (vehicle: Vehicle) => {
 
 useVehicle(new Car());
 useVehicle(new Truck());
+
+//============================ Discrimanated Union ===============================
+
+interface Bird {
+  type: 'bird';
+  flyingSpeed: number
+};
+
+interface Horse {
+  type: 'horse';
+  runningSpeed: number
+};
+
+type Animal = Bird | Horse;
+
+function animalSpeedInfo(animal: Animal) {
+  let speed: number = 0;
+  switch (animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    case 'horse':
+      speed = animal.runningSpeed;
+      break;
+    default:
+      break;
+  };
+  console.log(`Animal "${animal.type}" speed is: ${speed}`);
+  console.log('//=============================//');
+};
+
+const pony: Animal = {
+  type: 'horse',
+  runningSpeed: 140
+};
+
+const pecker: Animal = {
+  type: 'bird',
+  flyingSpeed: 77
+};
+
+animalSpeedInfo(pony);
+animalSpeedInfo(pecker);
