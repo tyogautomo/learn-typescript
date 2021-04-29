@@ -31,7 +31,7 @@ type Lengthy = {
   length: number;
 }
 
-function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+function countAndDescribe<T extends (string | Array<any>)>(element: T): [T, string] {
   let descriptor = 'We got no value.';
   if (element.length === 1) {
     descriptor = 'We got 1 value';
@@ -41,4 +41,4 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
   return [element, descriptor];
 };
 
-console.log(countAndDescribe('whattheheck'));
+console.log(countAndDescribe('this is not'));
