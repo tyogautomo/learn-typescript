@@ -1,21 +1,19 @@
-class DataStorage<T> {
-  private data: T[] = [];
+type CourseGoal = {
+  title: string;
+  description: string;
+  completionDate: Date;
+};
 
-  getData() {
-    return this.data;
-  }
+function createCourseGoal(title: string, description: string, completionDate: Date): CourseGoal {
+  const course: Partial<CourseGoal> = {};
+  course.title = title;
+  // course.description = description;
+  course.completionDate = completionDate;
+  return <CourseGoal>course;
+};
 
-  addData(item: T) {
-    this.data.push(item);
-  }
+const course = createCourseGoal('Gajebo', 'ga jelas banget', new Date());
+console.log(course);
 
-  removeItem(item: T) {
-    this.data.splice(this.data.indexOf(item), 1);
-  }
-}
-
-const storage = new DataStorage<string>();
-
-storage.addData('wannabe');
-storage.addData('ngepetmania');
-storage.addData('babonkece');
+const names: Readonly<string[]> = ['Joni', 'Marta'];
+// names.push('Tata'); // this will error because the variable is readonly
