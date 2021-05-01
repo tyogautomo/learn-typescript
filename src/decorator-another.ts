@@ -11,6 +11,13 @@ const AccessorLogger = (target: any, accessorName: string, descriptor: PropertyD
   console.log(descriptor, '<<<< descriptor');
 };
 
+const MethodLogger = (target: any, accessorName: string, descriptor: PropertyDescriptor) => {
+  console.log('Method logger...');
+  console.log(target, '<<<< target');
+  console.log(accessorName, '<<<< accessorName');
+  console.log(descriptor, '<<<< descriptor');
+};
+
 const ParameterLogger = (target: any, methodName: string | symbol, position: number) => {
   console.log('Parameter Logger...');
   console.log(target, '<<<< target');
@@ -35,7 +42,7 @@ class Product {
     }
   }
 
-  @AccessorLogger
+  @MethodLogger
   getPriceWithTax(@ParameterLogger tax: number) {
     return this._price * (1 + tax);
   }

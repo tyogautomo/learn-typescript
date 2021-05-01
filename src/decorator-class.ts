@@ -14,7 +14,7 @@ const WithTemplate = (template: string, htmlId: string) => (constructor: any) =>
 }
 
 const EnhanceConstruct = (template: string, htmlId: string) => <T extends { new(...args: any[]): { name: string } }>(originalClass: T) => { // this decorator replace our existing constructor
-  return class extends originalClass {
+  return class extends originalClass { // decorator can return something... depends on where it placed
     constructor(...args: any[]) {
       super(); // this will save the original constructor
       console.log('Rendering HTML element 2...')
