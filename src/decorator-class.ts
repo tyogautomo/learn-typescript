@@ -3,7 +3,7 @@ const Logger: Function = (logString: string): Function => (constructor: Function
   console.log(constructor, ' <<<< constructor');
 }
 
-const WithTemplate = (template: string, htmlId: string) => (constructor: any) => {
+const WithTemplate = (template: string, htmlId: string) => (constructor: any) => { // the decorator function's argument depends on where it placed
   console.log('Rendering HTML element...')
   const element: HTMLElement = <HTMLDivElement>document.getElementById(htmlId);
   const construct = new constructor();
