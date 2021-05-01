@@ -13,10 +13,10 @@ const WithTemplate = (template: string, htmlId: string) => (constructor: any) =>
   }
 }
 
-const EnhanceConstruct = (template: string, htmlId: string) => <T extends { new(...args: any[]): { name: string } }>(originalClass: T) => { // this decorator shows how to modify our existing constructor
+const EnhanceConstruct = (template: string, htmlId: string) => <T extends { new(...args: any[]): { name: string } }>(originalClass: T) => { // this decorator replace our existing constructor
   return class extends originalClass {
-    constructor(..._: any[]) {
-      super();
+    constructor(...args: any[]) {
+      super(); // this will save the original constructor
       console.log('Rendering HTML element 2...')
       const element: HTMLElement = <HTMLDivElement>document.getElementById(htmlId);
       if (element) {
@@ -30,10 +30,10 @@ const EnhanceConstruct = (template: string, htmlId: string) => <T extends { new(
 //this decorators runs returned function from bottom to up
 
 @Logger('LOGGING - MUTANT') // <== decorator: must return a function
-@EnhanceConstruct('<h2>This is subtitle from constructor changer</h2>', 'title')
+@EnhanceConstruct('<h2>This is subtitle from constructor changer</h2>', 'title') // this bitch will run on instanciate
 @WithTemplate('<h1>This is Title from Decorator</h1>', 'title') // <== decorator: must return a function (this is like applied on Angular)
 class Mutant {
-  name = "Tonol";
+  name = "Baxigur";
 
   constructor() {
     console.log('Creating an instance neh..');
@@ -41,5 +41,4 @@ class Mutant {
 }
 
 const monster: Mutant = new Mutant();
-
 console.log(monster);
