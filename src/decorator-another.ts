@@ -47,3 +47,30 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+//===================== returning something on method decorator ========================
+
+const AutoBind = (_: any, __: string, descriptor: PropertyDescriptor) => {
+  const originalMethod = descriptor.value;
+  const adjustedMethod: PropertyDescriptor = {
+    get() {
+      return originalMethod.bind(this); // 'this' will refer to the class
+    }
+  }
+  return adjustedMethod;
+}
+
+class Printer {
+  message = 'This message from Printer';
+
+  @AutoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const printer = new Printer();
+
+const button = document.querySelector('button')!;
+// button.addEventListener('click', printer.showMessage.bind(printer)); // you need to bind, becuse 'this' will refer to the event listener callback
+button.addEventListener('click', printer.showMessage); // you need to bind, becuse 'this' will refer to the event listener callback
