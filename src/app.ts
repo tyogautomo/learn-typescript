@@ -1,5 +1,15 @@
+function Require() { };
+
+function PositiveNumber() { };
+
+function validate(obj: object): boolean {
+  return false;
+}
+
 class Course {
+  @Require
   title: string;
+  @PositiveNumber
   price: number;
 
   constructor(t: string, p: number) {
@@ -19,5 +29,10 @@ form.addEventListener('submit', (e) => {
   const price = +priceEl.value;
 
   const course = new Course(title, price);
+
+  if (!validate(course)) {
+    throw new Error('Validation failed');
+  }
+
   console.log(course);
 })
