@@ -1,0 +1,11 @@
+select {
+  border: 1px solid #ffffff;
+  background-color: #8b3ca8;
+  color: #ffffff;
+  height: 30px;
+  font-size: 10pt;
+  width: 199px;
+  margin-left: 13px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
