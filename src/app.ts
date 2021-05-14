@@ -1,3 +1,15 @@
+// bind this
+function autobind(_: any, __: string, descriptor: PropertyDescriptor) {
+  const method = descriptor.value; // get the original method function
+  const newDescriptor: PropertyDescriptor = {
+    get() {
+      return method.bind(this); // bind the method to this
+    }
+  };
+  return newDescriptor;
+}
+
+// ProjectInput Class
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -16,13 +28,44 @@ class ProjectInput {
     this.titleInputElement = <HTMLInputElement>this.formElement.querySelector('#title')!;
     this.descriptionInputElement = <HTMLInputElement>this.formElement.querySelector('#description')!;
     this.peopleInputElement = <HTMLInputElement>this.formElement.querySelector('#people')!;
+    this.formElement.id = 'user-input';
 
     this.configureListener();
     this.attachElement();
   }
 
+  @autobind
   private onSubmit(e: Event) {
+    e.preventDefault();
+    const userInputs = this.gatherUserInput();
+    if (userInputs) {
+      const [title, description, people] = userInputs;
+      console.log(title, description, people);
+      this.clearInput();
+    } else {
+      alert('input failed, please try again.');
+    }
+  }
 
+  private gatherUserInput(): [string, string, number] | void {
+    const title = this.titleInputElement.value;
+    const description = this.descriptionInputElement.value;
+    const people = this.peopleInputElement.value;
+
+    if (
+      !title.trim() ||
+      !description.trim() ||
+      !people.trim()
+    ) {
+      return;
+    }
+    return [title, description, +people];
+  }
+
+  private clearInput() {
+    this.titleInputElement.value = '';
+    this.descriptionInputElement.value = '';
+    this.peopleInputElement.value = '';
   }
 
   private configureListener() {
