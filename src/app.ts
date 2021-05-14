@@ -1,5 +1,39 @@
-// bind this
-function autobind(_: any, __: string, descriptor: PropertyDescriptor) {
+// validation helper
+interface Validatable {
+  value: string | number;
+  required?: boolean;
+  maxLength?: number;
+  minLength?: number;
+  max?: number;
+  min?: number;
+}
+
+const validator = (input: Validatable): boolean => {
+  let isValid = true;
+  if (input.required) {
+    isValid = isValid && (input.value.toString().trim().length > 0);
+  }
+  if (typeof input.value === 'string') {
+    if (input.maxLength) {
+      isValid = isValid && (input.value.length <= input.maxLength);
+    }
+    if (input.minLength) {
+      isValid = isValid && (input.value.length >= input.minLength);
+    }
+  }
+  if (typeof input.value === 'number') {
+    if (input.max) {
+      isValid = isValid && (input.value <= input.max);
+    }
+    if (input.min) {
+      isValid = isValid && (input.value >= input.min);
+    }
+  }
+  return isValid;
+}
+
+// decorator
+const autobind = (_: any, __: string, descriptor: PropertyDescriptor) => {
   const method = descriptor.value; // get the original method function
   const newDescriptor: PropertyDescriptor = {
     get() {
@@ -78,21 +112,3 @@ class ProjectInput {
 }
 
 const input = new ProjectInput();
-
-// const formElement = (<HTMLTemplateElement>document.getElementById('project-input')!).content;
-// const projectElement = (<HTMLTemplateElement>document.getElementById('single-project')!).content;
-// const listElement = (<HTMLTemplateElement>document.getElementById('project-list')!).content;
-
-// const app = <HTMLDivElement>document.getElementById('app')!;
-// app.appendChild(formElement);
-// app.appendChild(listElement);
-
-// const form1 = <HTMLFormElement>document.querySelector('form')!;
-// form1.addEventListener('submit', (e) => {
-//   e.preventDefault();
-//   const title = <HTMLInputElement>document.getElementById('title')!;
-//   const description = <HTMLInputElement>document.getElementById('description')!;
-//   const people = <HTMLInputElement>document.getElementById('people')!;
-
-
-// });
