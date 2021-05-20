@@ -1,3 +1,8 @@
+// Global States
+class GlobalState {
+  private projects: any[] = [];
+}
+
 // ProjectList Class
 class ProjectList {
   templateElement: HTMLTemplateElement;
@@ -10,6 +15,21 @@ class ProjectList {
 
     const templateClone = <DocumentFragment>this.templateElement.content.cloneNode(true);
     this.element = <HTMLElement>templateClone.firstElementChild!;
+    this.element.id = `${this.type}-projects`;
+
+    this.attach();
+    this.renderContent();
+  }
+
+  private renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector('ul')!.id = listId;
+
+    this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement('beforeend', this.element);
   }
 }
 
@@ -146,3 +166,5 @@ const validator = (input: Validatable): boolean => {
 }
 
 const input = new ProjectInput();
+const activeProjectList = new ProjectList('active');
+const finishedProjectList = new ProjectList('finished');
