@@ -4,7 +4,7 @@ class ProjectList {
   hostElement: HTMLDivElement;
   element: HTMLElement
 
-  constructor() {
+  constructor(private type: 'active' | 'finished') {
     this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')!
     this.hostElement = <HTMLDivElement>document.getElementById('app')!;
 
