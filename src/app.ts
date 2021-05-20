@@ -1,8 +1,23 @@
+// ProjectList Class
+class ProjectList {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLElement
+
+  constructor() {
+    this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')!
+    this.hostElement = <HTMLDivElement>document.getElementById('app')!;
+
+    const templateClone = <DocumentFragment>this.templateElement.content.cloneNode(true);
+    this.element = <HTMLElement>templateClone.firstElementChild!;
+  }
+}
+
 // ProjectInput Class
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
-  formElement: HTMLFormElement;
+  element: HTMLFormElement;
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
@@ -12,12 +27,12 @@ class ProjectInput {
     this.hostElement = <HTMLDivElement>document.getElementById('app')!;
 
     const templateClone = <DocumentFragment>this.templateElement.content.cloneNode(true);
-    this.formElement = <HTMLFormElement>templateClone.firstElementChild!;
+    this.element = <HTMLFormElement>templateClone.firstElementChild!;
 
-    this.titleInputElement = <HTMLInputElement>this.formElement.querySelector('#title')!;
-    this.descriptionInputElement = <HTMLInputElement>this.formElement.querySelector('#description')!;
-    this.peopleInputElement = <HTMLInputElement>this.formElement.querySelector('#people')!;
-    this.formElement.id = 'user-input';
+    this.titleInputElement = <HTMLInputElement>this.element.querySelector('#title')!;
+    this.descriptionInputElement = <HTMLInputElement>this.element.querySelector('#description')!;
+    this.peopleInputElement = <HTMLInputElement>this.element.querySelector('#people')!;
+    this.element.id = 'user-input';
 
     this.configureListener();
     this.attachElement();
@@ -77,11 +92,11 @@ class ProjectInput {
   }
 
   private configureListener() {
-    this.formElement.addEventListener('submit', this.onSubmit);
+    this.element.addEventListener('submit', this.onSubmit);
   }
 
   private attachElement() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.formElement);
+    this.hostElement.insertAdjacentElement('afterbegin', this.element);
   }
 }
 
