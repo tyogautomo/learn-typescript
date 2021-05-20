@@ -27,7 +27,7 @@ class ProjectState extends State<Project> {
 
   addProject(title: string, description: string, people: number) {
     const newProject = new Project(
-      this.projects.length + 1,
+      (this.projects.length + 1).toString(),
       title,
       description,
       people,
@@ -124,7 +124,23 @@ enum ProjectStatus { Active, Finish }
 
 // Project
 class Project {
-  constructor(public id: number, public title: string, public description: string, public people: number, public status: ProjectStatus) { }
+  constructor(public id: string, public title: string, public description: string, public people: number, public status: ProjectStatus) { }
+}
+
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+  private project: Project;
+
+  constructor(hostId: string, project: Project) {
+    super('single-project', hostId, false, project.id);
+    this.project = project;
+
+    this.configure();
+    this.renderContent();
+  }
+
+  configure() { }
+
+  renderContent() { }
 }
 
 // ProjectInput Class
