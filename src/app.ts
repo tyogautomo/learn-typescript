@@ -1,13 +1,45 @@
 // Global States
-class GlobalState {
+class ProjectState {
+  private static instance: ProjectState;
+  private listeners: any[] = [];
   private projects: any[] = [];
+
+  private constructor() { } // create a singleton concept, source of truth
+
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+
+  addProject(title: string, description: string, people: number) {
+    const newProject = {
+      id: this.projects.length + 1,
+      title,
+      description,
+      people
+    }
+    this.projects.push(newProject);
+    for (const listener of this.listeners) {
+      listener([...this.projects]);
+    }
+  }
+
+  addListener(listener: Function) {
+    this.listeners.push(listener);
+  }
 }
+
+const projectState = ProjectState.getInstance();
 
 // ProjectList Class
 class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement
+  projects: any[] = [];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')!
@@ -17,8 +49,18 @@ class ProjectList {
     this.element = <HTMLElement>templateClone.firstElementChild!;
     this.element.id = `${this.type}-projects`;
 
+    projectState.addListener((projects: any[]) => {
+      this.projects = projects;
+      this.renderProjects();
+    });
+
     this.attach();
     this.renderContent();
+  }
+
+  private renderProjects() {
+    const listId = `${this.type}-projects-list`;
+    const listElement = <HTMLUListElement>document.getElementById(listId);
   }
 
   private renderContent() {
@@ -64,7 +106,8 @@ class ProjectInput {
     const userInputs = this.gatherUserInput();
     if (userInputs) {
       const [title, description, people] = userInputs;
-      console.log(title, description, people);
+      // console.log(title, description, people);
+      projectState.addProject(title, description, people);
       this.clearInput();
     } else {
       alert('input failed, please try again.');
