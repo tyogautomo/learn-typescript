@@ -2,7 +2,7 @@
 class ProjectState {
   private static instance: ProjectState;
   private listeners: any[] = [];
-  private projects: any[] = [];
+  private projects: Project[] = [];
 
   private constructor() { } // create a singleton concept, source of truth
 
@@ -15,12 +15,14 @@ class ProjectState {
   }
 
   addProject(title: string, description: string, people: number) {
-    const newProject = {
-      id: this.projects.length + 1,
+    const newProject = new Project(
+      this.projects.length + 1,
       title,
       description,
-      people
-    }
+      people,
+      ProjectStatus.Active
+    )
+
     this.projects.push(newProject);
     for (const listener of this.listeners) {
       listener([...this.projects]);
@@ -39,7 +41,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement
-  projects: any[] = [];
+  projects: Project[] = [];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = <HTMLTemplateElement>document.getElementById('project-list')!
@@ -49,7 +51,7 @@ class ProjectList {
     this.element = <HTMLElement>templateClone.firstElementChild!;
     this.element.id = `${this.type}-projects`;
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.projects = projects;
       this.renderProjects();
     });
@@ -61,6 +63,11 @@ class ProjectList {
   private renderProjects() {
     const listId = `${this.type}-projects-list`;
     const listElement = <HTMLUListElement>document.getElementById(listId);
+    for (const project of this.projects) {
+      const item = document.createElement('li');
+      item.textContent = project.title;
+      listElement.appendChild(item);
+    }
   }
 
   private renderContent() {
@@ -73,6 +80,14 @@ class ProjectList {
   private attach() {
     this.hostElement.insertAdjacentElement('beforeend', this.element);
   }
+}
+
+// Project Status Type
+enum ProjectStatus { Active, Finish }
+
+// Project
+class Project {
+  constructor(public id: number, public title: string, public description: string, public people: number, public status: ProjectStatus) { }
 }
 
 // ProjectInput Class
