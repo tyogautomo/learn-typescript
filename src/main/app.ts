@@ -1,14 +1,4 @@
-// =================== INTERFACES ===================
-interface Draggable {
-  dragStartHandler: (event: DragEvent) => void;
-  dragEndHandler: (event: DragEvent) => void;
-}
 
-interface DropTarget {
-  dragOverHandler: (event: DragEvent) => void;
-  dropHandler: (event: DragEvent) => void;
-  dragLeaveHandler: (event: DragEvent) => void;
-}
 
 // Global States
 type Listener<T> = (items: T[]) => void;
