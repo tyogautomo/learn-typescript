@@ -8,7 +8,7 @@ const adder = (
   if (showBool) {
     return stringTemplate + calc;
   }
-};
+}; 
 
 const number1 = 5;
 const number2 = 2.5;
