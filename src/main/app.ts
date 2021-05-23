@@ -1,4 +1,5 @@
 /// <reference path="drag-drop-interfaces.ts" />
+/// <reference path="project-model.ts" />
 
 namespace App {
   // Global States
@@ -154,14 +155,6 @@ namespace App {
         new ProjectItem(listId, project);
       }
     }
-  }
-
-  // Project Status Type
-  enum ProjectStatus { Active, Finish }
-
-  // Project
-  class Project {
-    constructor(public id: string, public title: string, public description: string, public people: number, public status: ProjectStatus) { }
   }
 
   class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
