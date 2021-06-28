@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server",
-    "go": "tsc && node ./dist/app.js"
+    "go": "tsc && node ./dist/app.js",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
