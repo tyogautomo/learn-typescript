@@ -1,7 +1,7 @@
 import { Component } from '../components/baseComponents.js';
 import { autobind } from '../decorators/autobind.js';
 import { projectState } from '../states/projectState.js';
-import { Validatable, validator } from '../helpers/validation.js';
+import * as Validation from '../helpers/validation.js';
 
 // ProjectInput Class
 export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
@@ -41,19 +41,19 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     const description = this.descriptionInputElement.value;
     const people = this.peopleInputElement.value;
 
-    const titleValidator: Validatable = {
+    const titleValidator: Validation.Validatable = {
       value: title,
       required: true,
       minLength: 1,
       maxLength: 20
     }
-    const descValidator: Validatable = {
+    const descValidator: Validation.Validatable = {
       value: description,
       required: true,
       minLength: 5,
       maxLength: 20
     }
-    const peopleValidator: Validatable = {
+    const peopleValidator: Validation.Validatable = {
       value: +people,
       required: true,
       max: 20,
@@ -61,9 +61,9 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     }
 
     if (
-      !validator(titleValidator) ||
-      !validator(descValidator) ||
-      !validator(peopleValidator)
+      !Validation.validator(titleValidator) ||
+      !Validation.validator(descValidator) ||
+      !Validation.validator(peopleValidator)
     ) {
       return;
     }
