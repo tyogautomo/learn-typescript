@@ -1,4 +1,4 @@
-import { Project, ProjectStatus } from '../models/project.js';
+import { Project, ProjectStatus } from '../models/project'; // you need to specify extension name if didnt use Webpack
 
 // Global States
 type Listener<T> = (items: T[]) => void;

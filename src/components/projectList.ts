@@ -1,9 +1,9 @@
-import { Component } from './baseComponents.js';
-import { ProjectItem } from './projectItem.js';
-import { DropTarget } from '../models/drag-drop.js';
-import { autobind } from '../decorators/autobind.js';
-import { projectState } from '../states/projectState.js';
-import { Project, ProjectStatus } from '../models/project.js';
+import { Component } from './baseComponents'; // you need to specify extension name if didnt use Webpack
+import { ProjectItem } from './projectItem';
+import { DropTarget } from '../models/drag-drop';
+import { autobind } from '../decorators/autobind';
+import { projectState } from '../states/projectState';
+import { Project, ProjectStatus } from '../models/project';
 
 // ProjectList Class
 export class ProjectList extends Component<HTMLDivElement, HTMLElement> implements DropTarget {
