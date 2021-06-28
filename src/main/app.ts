@@ -1,8 +1,8 @@
-/// <reference path="./states/projectState.ts" />
-/// <reference path="./interfaces/drag-drop.ts" />
-/// <reference path="./models/project.ts" />
-/// <reference path="./helpers/validation.ts" />
-/// <reference path="./decorators/autobind.ts" />
+/// <reference path="states/projectState.ts" />
+/// <reference path="interfaces/drag-drop.ts" />
+/// <reference path="models/project.ts" />
+/// <reference path="helpers/validation.ts" />
+/// <reference path="decorators/autobind.ts" />
 
 namespace App {
   // ============== BASE CLASS ==============
