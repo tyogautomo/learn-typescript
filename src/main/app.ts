@@ -1,6 +1,8 @@
-/// <reference path="state.ts" />
-/// <reference path="drag-drop-interfaces.ts" />
-/// <reference path="project-model.ts" />
+/// <reference path="./states/projectState.ts" />
+/// <reference path="./interfaces/drag-drop.ts" />
+/// <reference path="./models/project.ts" />
+/// <reference path="./helpers/validation.ts" />
+/// <reference path="./decorators/autobind.ts" />
 
 namespace App {
   // ============== BASE CLASS ==============
@@ -210,51 +212,6 @@ namespace App {
       this.descriptionInputElement.value = '';
       this.peopleInputElement.value = '';
     }
-  }
-
-  // validation helper
-  interface Validatable {
-    value: string | number;
-    required?: boolean;
-    maxLength?: number;
-    minLength?: number;
-    max?: number;
-    min?: number;
-  }
-
-  // decorator
-  function autobind(_: any, __: string, descriptor: PropertyDescriptor) {
-    const method = descriptor.value; // get the original method function
-    const newDescriptor: PropertyDescriptor = {
-      get() {
-        return method.bind(this); // bind the method to this
-      }
-    };
-    return newDescriptor;
-  }
-
-  const validator = (input: Validatable): boolean => {
-    let isValid = true;
-    if (input.required) {
-      isValid = isValid && (input.value.toString().trim().length > 0);
-    }
-    if (typeof input.value === 'string') {
-      if (input.maxLength != null) {
-        isValid = isValid && (input.value.length <= input.maxLength);
-      }
-      if (input.minLength != null) {
-        isValid = isValid && (input.value.length >= input.minLength);
-      }
-    }
-    if (typeof input.value === 'number') {
-      if (input.max) {
-        isValid = isValid && (input.value <= input.max);
-      }
-      if (input.min) {
-        isValid = isValid && (input.value >= input.min);
-      }
-    }
-    return isValid;
   }
 
   new ProjectInput();
