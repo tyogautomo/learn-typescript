@@ -1,6 +1,3 @@
-/// <reference path="drag-drop-interfaces.ts" />
-/// <reference path="project-model.ts" /> 
-
 namespace App {
   // Global States
   type Listener<T> = (items: T[]) => void;
